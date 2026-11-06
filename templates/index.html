@@ -2,86 +2,130 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>CineMatch | Discover Cinema</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CineMatch — Discover Your Next Film</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+
 <div class="ambient ambient-one"></div>
 <div class="ambient ambient-two"></div>
+
 <nav class="navbar">
-<a href="#home" class="logo">CINE<span>MATCH</span></a>
-<div class="nav-links">
-<a href="#home">Home</a>
-<a href="#discover">Discover</a>
-<a href="#about">Our Technology</a>
-</div>
-<a href="#discover" class="nav-button">Explore Cinema ↗</a>
+    <a class="brand" href="/">CINE<span>MATCH</span></a>
+    <div class="nav-right">
+        <span class="nav-status"><span class="status-dot"></span> CINEMA DISCOVERY</span>
+    </div>
 </nav>
+
 <main>
-<section class="hero" id="home">
-<div class="hero-content">
-<div class="hero-badge"><span class="status-dot"></span> INTELLIGENT CINEMA DISCOVERY</div>
-<p class="eyebrow">A NEW WAY TO EXPERIENCE MOVIES</p>
-<h1>Every Story<br>Deserves a <span class="gold-text">Discovery.</span></h1>
-<p class="hero-description">Find films that understand your taste. Discover your next obsession with the power of machine learning.</p>
-<a href="#discover" class="hero-button">Discover Your Next Film <span>→</span></a>
-<div class="hero-stats">
-<div><h3>4,800+</h3><p>MOVIES ANALYZED</p></div>
-<div><h3>AI</h3><p>POWERED DISCOVERY</p></div>
-<div><h3>∞</h3><p>STORIES TO EXPLORE</p></div>
-</div>
-</div>
-<div class="hero-decoration">
-<div class="orbit orbit-one"></div>
-<div class="orbit orbit-two"></div>
-<div class="orbit-center">✦</div>
-<span class="orbit-label">THE ART OF DISCOVERY</span>
-</div>
-</section>
-<section class="discover section" id="discover">
-<div class="section-label">01 / PERSONALIZED DISCOVERY</div>
-<h2>Find Your <span class="gold-text">Next Favourite.</span></h2>
-<p class="section-description">Tell us a movie you love. Our recommendation engine will find films with a similar soul.</p>
-<div class="search-box">
-<span class="search-icon">⌕</span>
-<input type="text" id="movieInput" placeholder="Enter a movie title... e.g. Interstellar" autocomplete="off">
-<button id="recommendBtn">Discover <span>✦</span></button>
-</div>
-<p id="message" aria-live="polite"></p>
-<div class="results-heading">
-<div><span class="section-label">YOUR PERSONAL COLLECTION</span><h3>Recommended Films</h3></div>
-<span class="results-tag">AI GENERATED</span>
-</div>
-<div class="movie-grid" id="movieContainer">
-<div class="empty-state">
-<div class="empty-icon">✧</div>
-<h3>Your next favourite is waiting.</h3>
-<p>Search for a movie to begin your discovery.</p>
-</div>
-</div>
-</section>
-<section class="about section" id="about">
-<div class="section-label">02 / BEHIND THE EXPERIENCE</div>
-<h2>Thoughtful Cinema.<br><span class="gold-text">Intelligent Discovery.</span></h2>
-<p>CineMatch uses content-based machine learning to understand similarities between films through their genres, keywords, cast, directors and descriptions.</p>
-<div class="technology-card">
-<div class="tech-icon">✦</div>
-<span class="tech-label">THE ENGINE</span>
-<h3>Machine Learning</h3>
-<p>CountVectorizer + Cosine Similarity</p>
-<div class="tech-status"><span></span> RECOMMENDATION MODEL READY</div>
-</div>
-</section>
+    <section class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">A WORLD OF STORIES, ONE DISCOVERY AWAY</p>
+            <h1>Every story deserves<br>a <span>discovery.</span></h1>
+            <p class="hero-description">
+                Find your next favourite film through the stories,
+                genres and cinematic worlds you already love.
+            </p>
+        </div>
+
+        <div class="hero-image">
+            <div class="image-frame">
+                <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1200&q=85"
+                     alt="Cinematic movie theatre">
+                <div class="image-overlay"></div>
+                <p class="image-caption">THE ART OF DISCOVERY</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="discovery-section" id="discover">
+        <div class="section-heading">
+            <p class="eyebrow">YOUR NEXT CINEMATIC EXPERIENCE</p>
+            <h2>What are we <span>watching?</span></h2>
+            <p>Enter a movie you love. We'll find stories with a similar feel.</p>
+        </div>
+
+        <div class="search-panel">
+            <div class="search-box">
+                <input id="movieInput" type="text"
+                       placeholder="Try Avatar, The Dark Knight, Dr. Shaitan..."
+                       autocomplete="off">
+                <button id="recommendBtn">Discover <span>→</span></button>
+            </div>
+
+            <div class="filters">
+                <select id="industryFilter">
+                    <option value="All">All cinema</option>
+                    <option value="Indian">Indian cinema</option>
+                    <option value="International">International</option>
+                </select>
+
+                <select id="languageFilter">
+                    <option value="All">All languages</option>
+                    {% for language in languages %}
+                    <option value="{{ language }}">{{ language|title }}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="genreFilter">
+                    <option value="All">All genres</option>
+                    {% for genre in genres %}
+                    <option value="{{ genre }}">{{ genre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <p id="message" class="message">Enter a film title to begin.</p>
+        </div>
+    </section>
+
+    <section class="results-section">
+        <div class="results-heading">
+            <div>
+                <p class="eyebrow">CURATED FOR YOUR TASTE</p>
+                <h2>Your next <span>watchlist.</span></h2>
+            </div>
+            <span class="results-count" id="resultsCount">0 FILMS</span>
+        </div>
+
+        <div id="movieContainer" class="movie-grid">
+            <div class="empty-state">
+                <div class="empty-poster">
+                    <span>YOUR</span>
+                    <strong>NEXT<br>FAVOURITE<br>FILM</strong>
+                    <small>AWAITING DISCOVERY</small>
+                </div>
+                <p>Your recommendations will appear here.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="technology-section">
+        <div class="technology-image">
+            <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=1000&q=85"
+                 alt="Cinema film projector">
+        </div>
+        <div class="technology-copy">
+            <p class="eyebrow">BEHIND THE EXPERIENCE</p>
+            <h2>Thoughtful technology.<br><span>Beautiful discoveries.</span></h2>
+            <p>
+                CineMatch uses content-based machine learning to explore
+                movie genres, keywords, cast and other available film details
+                to discover films that share similarities.
+            </p>
+        </div>
+    </section>
 </main>
+
 <footer>
-<div class="footer-brand">CINE<span>MATCH</span></div>
-<p>An intelligent journey through the world of cinema.</p>
-<div class="creator">Designed & Developed by <span>Prajkta ♡</span></div>
-<div class="copyright">© 2026 CineMatch</div>
+    <a class="brand" href="/">CINE<span>MATCH</span></a>
+    <p>Designed &amp; Developed by Prajkta ♡</p>
+    <span>MADE FOR MOVIE LOVERS</span>
 </footer>
-<script src="{{ url_for('static',filename='js/script.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
